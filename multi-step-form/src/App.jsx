@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import StepYourInfo from "./components/steps/StepYourInfo";
-import StepSelectPlan from "./components/steps/StepSelectPlan";
-import StepAddOns from "./components/steps/StepAddOns";
-import StepSummary from "./components/steps/StepSummary";
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import StepYourInfo from './components/steps/StepYourInfo';
+import StepSelectPlan from './components/steps/StepSelectPlan';
+import StepAddOns from './components/steps/StepAddOns';
+import StepSummary from './components/steps/StepSummary';
 
 const INITIAL_DATA = {
-  name: "",
-  email: "",
-  phone: "",
-  plan: "",
-  billing: "monthly",
+  name: '',
+  email: '',
+  phone: '',
+  plan: '',
+  billing: 'monthly',
   addons: [],
 };
 
@@ -39,7 +39,7 @@ export default function App() {
   function handleToggleBilling() {
     setData((prev) => ({
       ...prev,
-      billing: prev.billing === "monthly" ? "yearly" : "monthly",
+      billing: prev.billing === 'monthly' ? 'yearly' : 'monthly',
     }));
   }
 
@@ -63,21 +63,21 @@ export default function App() {
     const newErrors = {};
 
     if (currentStep === 1) {
-      if (!data.name.trim()) newErrors.name = "This field is required";
+      if (!data.name.trim()) newErrors.name = 'This field is required';
       if (!data.email.trim()) {
-        newErrors.email = "This field is required";
+        newErrors.email = 'This field is required';
       } else if (!EMAIL_REGEX.test(data.email)) {
-        newErrors.email = "Enter a valid email";
+        newErrors.email = 'Enter a valid email';
       }
       if (!data.phone.trim()) {
-        newErrors.phone = "This field is required";
+        newErrors.phone = 'This field is required';
       } else if (!PHONE_REGEX.test(data.phone)) {
-        newErrors.phone = "Enter a valid phone number";
+        newErrors.phone = 'Enter a valid phone number';
       }
     }
 
     if (currentStep === 2) {
-      if (!data.plan) newErrors.plan = "Please select a plan to continue";
+      if (!data.plan) newErrors.plan = 'Please select a plan to continue';
     }
 
     // Krok 3 (Add-ons) jest opcjonalny — brak walidacji.
@@ -107,32 +107,63 @@ export default function App() {
 
   if (submitted) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-        <div className="w-full max-w-md rounded-xl bg-white p-10 text-center shadow-xl">
-          <h1 className="font-mono text-2xl font-bold text-slate-900">
-            Thank you!
-          </h1>
-          <p className="mt-3 text-sm text-slate-500">
-            Thanks for confirming your subscription, {data.name || "friend"}!
-            We hope you have fun using our platform. If you ever need to
-            change your plan, you can do so at any time from your account.
-          </p>
+      <div className='flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10'>
+        <div className='grid w-full max-w-4xl gap-0 overflow-hidden rounded-2xl bg-white shadow-xl sm:grid-cols-[300px_1fr] sm:p-4'>
+          <div className='sm:h-full'>
+            <Sidebar currentStep={step} />
+          </div>
+
+          <div className='flex flex-1 flex-col items-center justify-center px-6 py-16 text-center sm:px-10'>
+            <div className='flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-b from-rose-400 to-rose-500'>
+              <svg
+                viewBox='0 0 24 24'
+                fill='none'
+                className='h-8 w-8 text-white'
+                aria-hidden='true'
+              >
+                <path
+                  d='M5 13l4 4L19 7'
+                  stroke='currentColor'
+                  strokeWidth='2.5'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
+              </svg>
+            </div>
+
+            <h1 className='mt-6 font-mono text-2xl font-bold text-slate-900'>
+              Thank you!
+            </h1>
+            <p className='mt-3 max-w-sm text-sm text-slate-500'>
+              Thanks for confirming your subscription! We hope you have fun
+              using our platform. If you ever need support, please feel free to
+              email us at{' '}
+              <span className='font-semibold text-slate-600'>
+                support@loremgaming.com
+              </span>
+              .
+            </p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10">
-      <div className="grid w-full max-w-4xl gap-0 overflow-hidden rounded-2xl bg-white shadow-xl sm:grid-cols-[300px_1fr] sm:p-4">
-        <div className="sm:h-full">
+    <div className='flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10'>
+      <div className='grid w-full max-w-4xl gap-0 overflow-hidden rounded-2xl bg-white shadow-xl sm:grid-cols-[300px_1fr] sm:p-4'>
+        <div className='sm:h-full'>
           <Sidebar currentStep={step} />
         </div>
 
-        <div className="flex flex-col p-6 sm:p-10">
-          <div className="flex-1">
+        <div className='flex flex-col p-6 sm:p-10'>
+          <div className='flex-1'>
             {step === 1 && (
-              <StepYourInfo data={data} errors={errors} onChange={handleChange} />
+              <StepYourInfo
+                data={data}
+                errors={errors}
+                onChange={handleChange}
+              />
             )}
             {step === 2 && (
               <StepSelectPlan
@@ -150,12 +181,12 @@ export default function App() {
             )}
           </div>
 
-          <div className="mt-8 flex items-center justify-between">
+          <div className='mt-8 flex items-center justify-between'>
             {step > 1 ? (
               <button
-                type="button"
+                type='button'
                 onClick={goBack}
-                className="text-sm font-semibold text-slate-500 hover:text-slate-900"
+                className='text-sm font-semibold text-slate-500 hover:text-slate-900'
               >
                 Go Back
               </button>
@@ -165,17 +196,17 @@ export default function App() {
 
             {step < 4 ? (
               <button
-                type="button"
+                type='button'
                 onClick={goNext}
-                className="rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-600"
+                className='rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-600'
               >
                 Next Step
               </button>
             ) : (
               <button
-                type="button"
+                type='button'
                 onClick={handleConfirm}
-                className="rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+                className='rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700'
               >
                 Confirm
               </button>

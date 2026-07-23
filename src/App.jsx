@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import Sidebar from './components/Sidebar';
-import StepYourInfo from './components/steps/StepYourInfo';
-import StepSelectPlan from './components/steps/StepSelectPlan';
-import StepAddOns from './components/steps/StepAddOns';
-import StepSummary from './components/steps/StepSummary';
+import React, { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import MobileStepHeader from "./components/MobileStepHeader";
+import StepYourInfo from "./components/steps/StepYourInfo";
+import StepSelectPlan from "./components/steps/StepSelectPlan";
+import StepAddOns from "./components/steps/StepAddOns";
+import StepSummary from "./components/steps/StepSummary";
 
 const INITIAL_DATA = {
-  name: '',
-  email: '',
-  phone: '',
-  plan: '',
-  billing: 'monthly',
+  name: "",
+  email: "",
+  phone: "",
+  plan: "",
+  billing: "monthly",
   addons: [],
 };
 
@@ -39,7 +40,7 @@ export default function App() {
   function handleToggleBilling() {
     setData((prev) => ({
       ...prev,
-      billing: prev.billing === 'monthly' ? 'yearly' : 'monthly',
+      billing: prev.billing === "monthly" ? "yearly" : "monthly",
     }));
   }
 
@@ -63,21 +64,21 @@ export default function App() {
     const newErrors = {};
 
     if (currentStep === 1) {
-      if (!data.name.trim()) newErrors.name = 'This field is required';
+      if (!data.name.trim()) newErrors.name = "This field is required";
       if (!data.email.trim()) {
-        newErrors.email = 'This field is required';
+        newErrors.email = "This field is required";
       } else if (!EMAIL_REGEX.test(data.email)) {
-        newErrors.email = 'Enter a valid email';
+        newErrors.email = "Enter a valid email";
       }
       if (!data.phone.trim()) {
-        newErrors.phone = 'This field is required';
+        newErrors.phone = "This field is required";
       } else if (!PHONE_REGEX.test(data.phone)) {
-        newErrors.phone = 'Enter a valid phone number';
+        newErrors.phone = "Enter a valid phone number";
       }
     }
 
     if (currentStep === 2) {
-      if (!data.plan) newErrors.plan = 'Please select a plan to continue';
+      if (!data.plan) newErrors.plan = "Please select a plan to continue";
     }
 
     // Krok 3 (Add-ons) jest opcjonalny — brak walidacji.
@@ -107,39 +108,41 @@ export default function App() {
 
   if (submitted) {
     return (
-      <div className='flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10'>
-        <div className='grid w-full max-w-4xl gap-0 overflow-hidden rounded-2xl bg-white shadow-xl sm:grid-cols-[300px_1fr] sm:p-4'>
-          <div className='sm:h-full'>
+      <div className="min-h-screen overflow-x-auto bg-slate-100 sm:flex sm:items-center sm:justify-center sm:px-4 sm:py-10">
+        <div className="mx-auto w-full min-w-[320px] sm:max-w-4xl sm:min-w-0 sm:grid sm:grid-cols-[300px_1fr] sm:gap-0 sm:overflow-hidden sm:rounded-2xl sm:bg-white sm:shadow-xl sm:p-4">
+          <MobileStepHeader currentStep={step} />
+
+          <div className="hidden sm:block sm:h-full">
             <Sidebar currentStep={step} />
           </div>
 
-          <div className='flex flex-1 flex-col items-center justify-center px-6 py-16 text-center sm:px-10'>
-            <div className='flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-b from-rose-400 to-rose-500'>
+          <div className="relative z-10 mx-4 -mt-20 flex flex-1 flex-col items-center justify-center rounded-xl bg-white px-6 py-10 text-center shadow-xl sm:static sm:mx-0 sm:mt-0 sm:rounded-none sm:px-10 sm:py-16 sm:shadow-none">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-b from-rose-400 to-rose-500">
               <svg
-                viewBox='0 0 24 24'
-                fill='none'
-                className='h-8 w-8 text-white'
-                aria-hidden='true'
+                viewBox="0 0 24 24"
+                fill="none"
+                className="h-8 w-8 text-white"
+                aria-hidden="true"
               >
                 <path
-                  d='M5 13l4 4L19 7'
-                  stroke='currentColor'
-                  strokeWidth='2.5'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
+                  d="M5 13l4 4L19 7"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </div>
 
-            <h1 className='mt-6 font-mono text-2xl font-bold text-slate-900'>
+            <h1 className="mt-6 font-mono text-2xl font-bold text-slate-900">
               Thank you!
             </h1>
-            <p className='mt-3 max-w-sm text-sm text-slate-500'>
+            <p className="mt-3 max-w-sm text-sm text-slate-500">
               Thanks for confirming your subscription! We hope you have fun
-              using our platform. If you ever need support, please feel free to
-              email us at{' '}
-              <span className='font-semibold text-slate-600'>
-                support@loremgaming.com
+              using our platform. If you ever need support, please feel free
+              to email us at{" "}
+              <span className="font-semibold text-slate-600">
+                support@lorumgaming.com
               </span>
               .
             </p>
@@ -150,20 +153,18 @@ export default function App() {
   }
 
   return (
-    <div className='flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10'>
-      <div className='grid w-full max-w-4xl gap-0 overflow-hidden rounded-2xl bg-white shadow-xl sm:grid-cols-[300px_1fr] sm:p-4'>
-        <div className='sm:h-full'>
+    <div className="min-h-screen overflow-x-auto bg-slate-100 sm:flex sm:items-center sm:justify-center sm:px-4 sm:py-10">
+      <div className="mx-auto w-full min-w-[320px] sm:max-w-4xl sm:min-w-0 sm:grid sm:grid-cols-[300px_1fr] sm:gap-0 sm:overflow-hidden sm:rounded-2xl sm:bg-white sm:shadow-xl sm:p-4">
+        <MobileStepHeader currentStep={step} />
+
+        <div className="hidden sm:block sm:h-full">
           <Sidebar currentStep={step} />
         </div>
 
-        <div className='flex flex-col p-6 sm:p-10'>
-          <div className='flex-1'>
+        <div className="relative z-10 mx-4 -mt-20 flex flex-col rounded-xl bg-white p-6 pb-8 shadow-xl sm:static sm:mx-0 sm:mt-0 sm:rounded-none sm:p-10 sm:shadow-none">
+          <div className="flex-1">
             {step === 1 && (
-              <StepYourInfo
-                data={data}
-                errors={errors}
-                onChange={handleChange}
-              />
+              <StepYourInfo data={data} errors={errors} onChange={handleChange} />
             )}
             {step === 2 && (
               <StepSelectPlan
@@ -181,12 +182,12 @@ export default function App() {
             )}
           </div>
 
-          <div className='mt-8 flex items-center justify-between'>
+          <div className="mt-8 flex items-center justify-between">
             {step > 1 ? (
               <button
-                type='button'
+                type="button"
                 onClick={goBack}
-                className='text-sm font-semibold text-slate-500 hover:text-slate-900'
+                className="whitespace-nowrap text-sm font-semibold text-slate-500 hover:text-slate-900"
               >
                 Go Back
               </button>
@@ -196,17 +197,17 @@ export default function App() {
 
             {step < 4 ? (
               <button
-                type='button'
+                type="button"
                 onClick={goNext}
-                className='rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-600'
+                className="whitespace-nowrap rounded-lg bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-600"
               >
                 Next Step
               </button>
             ) : (
               <button
-                type='button'
+                type="button"
                 onClick={handleConfirm}
-                className='rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700'
+                className="whitespace-nowrap rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
               >
                 Confirm
               </button>
